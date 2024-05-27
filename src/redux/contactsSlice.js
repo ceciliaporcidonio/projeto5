@@ -5,7 +5,7 @@ const contactsSlice = createSlice({
   initialState: [],
   reducers: {
     addContact: (state, action) => {
-      state.push(action.payload);
+      state.push({ ...action.payload, id: Date.now().toString() });
     },
     removeContact: (state, action) => {
       return state.filter(contact => contact.id !== action.payload);
@@ -13,10 +13,10 @@ const contactsSlice = createSlice({
     editContact: (state, action) => {
       const index = state.findIndex(contact => contact.id === action.payload.id);
       if (index !== -1) {
-        state[index] = action.payload;
+        state[index] = { ...state[index], ...action.payload };
       }
-    },
-  },
+    }
+  }
 });
 
 export const { addContact, removeContact, editContact } = contactsSlice.actions;
